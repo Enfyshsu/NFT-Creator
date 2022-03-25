@@ -130,4 +130,5 @@ dmypy.json
 
 __MACOSX/
 data.json
-media/*
+media/*/
+media/*.zip
