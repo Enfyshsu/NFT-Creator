@@ -4,6 +4,7 @@ from zipfile import ZipFile
 from . import call
 import json
 import os
+import uuid
 
 # Create your views here.
 def add(request):
@@ -13,17 +14,19 @@ def add(request):
     # print(data['name'])
 
     if request.method == "POST":
-
+        upload_id = uuid.uuid4().hex
+        context = {'upload_id': upload_id}
         zip_file = request.FILES.get('zip_file')
         total_images = request.POST.get('total_images')
 
         with ZipFile(zip_file, 'r') as zipObj:
             # Extract all the contents of zip file in current directory
             zipObj.extractall()
-        call.main(str(zip_file).split(".")[0], int(total_images))
+        
+        call.main(str(zip_file).split(".")[0], int(total_images), upload_id)
         # user = User(user_image=user_img)
         # user.save()
-        return render(request, 'upload_profile/download.html', locals())
+        return render(request, 'upload_profile/download.html/', context)
     return render(request, 'upload_profile/add.html', locals())
 
 def download(request):

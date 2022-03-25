@@ -2,15 +2,16 @@
 # coding: utf-8
 
 # https://betterprogramming.pub/create-your-own-nft-collection-with-python-82af40abf99f
-
+from django.conf import settings
 from PIL import Image 
 from IPython.display import display 
+import zipfile
 import random
 import json
 import os
 import shutil
 
-def main(zip_filename, total_images):
+def main(zip_filename, total_images, uuid):
 
     all_types = os.listdir(zip_filename)
     all_types.sort()
@@ -47,11 +48,11 @@ def main(zip_filename, total_images):
     # print(all_images)
 
     #### Generate Images
-
-    path= f'./images'
-    if os.path.exists(path):
-        # 遞迴刪除資料夾下的所有子資料夾和子檔案
-        shutil.rmtree(path)
+    os.mkdir(settings.MEDIA_ROOT + '/' + uuid)
+    path = settings.MEDIA_ROOT + '/' + uuid + '/images/'
+    # if os.path.exists(path):
+    #     # 遞迴刪除資料夾下的所有子資料夾和子檔案
+    #     shutil.rmtree(path)
     os.mkdir(path)
 
     for img in all_images:
@@ -65,14 +66,14 @@ def main(zip_filename, total_images):
 
         rgb_im = composite_img.convert('RGB')
         file_name = str(img["id"]) + ".png"
-        rgb_im.save("./images/" + file_name)
+        rgb_im.save(path + file_name)
 
     # write data.csv
     import csv  
 
     header = all_types
 
-    with open('data.csv', 'w', encoding='UTF8') as f:
+    with open(settings.MEDIA_ROOT + '/' + uuid + '/data.csv', 'w', encoding='UTF8') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         for img in all_images:
@@ -81,7 +82,17 @@ def main(zip_filename, total_images):
                 data.append(img[t])
             writer.writerow(data)
 
-
     shutil.rmtree(zip_filename)
+
+    startdir = settings.MEDIA_ROOT + '/' + uuid
+    file_news = startdir + '.zip'
+    z = zipfile.ZipFile(file_news, 'w', zipfile.ZIP_DEFLATED)
+    for dirpath, dirnames, filenames in os.walk(startdir):
+        fpath = dirpath.replace(startdir, '')
+        fpath = fpath and fpath + os.sep or ''
+        for filename in filenames:
+            z.write(os.path.join(dirpath, filename), fpath + filename)
+    z.close()
+
 if __name__ == "__main__":
-    main(zip_filename, total_images)
+    main(zip_filename, total_images, uuid)

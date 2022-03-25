@@ -7,9 +7,7 @@
 <body>
     <!-- <h1>添加使用者</h1> -->
     <p>Click on the image to download it:<p>
-        {% csrf_token %}
-        <a href="https://www.mediafire.com/file/dlok9vzlcpc7tmj/data.csv/file" download>
-          <button>Download</button>
-        </a>
+    <a href = "{{ MEDIA_URL }}{{ upload_id }}.zip" download = "NFTfiles.zip">Download Document</a>
+    <p>MEDIA_URL: {{ MEDIA_URL }}</p>
 </body>
 </html>
