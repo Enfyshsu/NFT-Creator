@@ -12,16 +12,14 @@ import os
 import shutil
 
 def main(zip_filename, total_images, uuid):
-
     all_types = os.listdir(zip_filename)
     all_types.sort()
+    all_types = [item for item in all_types if not item.startswith('.')]
 
     all_files = {}
 
     for t in all_types:
-        all_files[t] = []
-        for f in os.listdir(os.path.join(zip_filename, t)):
-           all_files[t].append(f)
+        all_files[t] = [f for f in os.listdir(os.path.join(zip_filename, t)) if not f.startswith('.')]
 
     ## Generate Traits
 
