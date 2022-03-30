@@ -11,10 +11,9 @@ import json
 import os
 import shutil
 
-def main(zip_filename, total_images, uuid):
-    all_types = os.listdir(zip_filename)
+def main(zip_filename, image_num, uuid):
+    all_types = [t.split('.')[0] for t in os.listdir(zip_filename) if not t.startswith('.')]
     all_types.sort()
-    all_types = [item for item in all_types if not item.startswith('.')]
 
     all_files = {}
 
@@ -36,14 +35,11 @@ def main(zip_filename, total_images, uuid):
         return new_image if new_image not in all_images else create_new_image()
 
         
-        
     # Generate the unique combinations based on trait weightings
-    for i in range(total_images): 
+    for i in range(image_num): 
         new_trait_image = create_new_image()
         new_trait_image["id"] = i
         all_images.append(new_trait_image)
-    
-    # print(all_images)
 
     #### Generate Images
     os.mkdir(settings.MEDIA_ROOT + '/' + uuid)
@@ -92,4 +88,4 @@ def main(zip_filename, total_images, uuid):
     z.close()
 
 if __name__ == "__main__":
-    main(zip_filename, total_images, uuid)
+    main(zip_filename, image_num, uuid)
