@@ -19,7 +19,7 @@ def main(zip_filename, total_images, uuid):
     all_files = {}
 
     for t in all_types:
-        all_files[t] = [f for f in os.listdir(os.path.join(zip_filename, t)) if not f.startswith('.')]
+        all_files[t] = [f.split('.')[0] for f in os.listdir(os.path.join(zip_filename, t)) if not f.startswith('.')]
 
     ## Generate Traits
 
@@ -48,15 +48,12 @@ def main(zip_filename, total_images, uuid):
     #### Generate Images
     os.mkdir(settings.MEDIA_ROOT + '/' + uuid)
     path = settings.MEDIA_ROOT + '/' + uuid + '/images/'
-    # if os.path.exists(path):
-    #     # 遞迴刪除資料夾下的所有子資料夾和子檔案
-    #     shutil.rmtree(path)
     os.mkdir(path)
 
     for img in all_images:
         img_list = {}
         for i in range(len(all_types)):
-            img_list["img_" + str(i)] = Image.open(os.path.join(zip_filename, all_types[i], img[all_types[i]])).convert('RGBA')
+            img_list["img_" + str(i)] = Image.open(os.path.join(zip_filename, all_types[i], img[all_types[i]] + '.png')).convert('RGBA')
         
         composite_img = Image.alpha_composite(img_list["img_0"], img_list["img_1"])
         for i in range(2, len(all_types)):
@@ -69,13 +66,15 @@ def main(zip_filename, total_images, uuid):
     # write data.csv
     import csv  
 
-    header = all_types
+    header = all_types.copy()
+    header.insert(0, 'Name')
 
     with open(settings.MEDIA_ROOT + '/' + uuid + '/data.csv', 'w', encoding='UTF8') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         for img in all_images:
             data = []
+            data.append(img["id"])
             for t in all_types:
                 data.append(img[t])
             writer.writerow(data)
