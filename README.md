@@ -17,7 +17,7 @@ $ vim data.json
 ```
 
 In data.json:
-``` json
+``` json=
 {
     "SERVER_IP": <Your server IP>,
     "SECRET_KEY": <Your django secret key>
