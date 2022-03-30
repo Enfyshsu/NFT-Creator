@@ -26,8 +26,8 @@ def add(request):
         call.main(str(zip_file).split(".")[0], int(total_images), upload_id)
         # user = User(user_image=user_img)
         # user.save()
-        return render(request, 'upload_profile/download.html/', context)
-    return render(request, 'upload_profile/add.html', locals())
+        return render(request, 'creator/download.html/', context)
+    return render(request, 'creator/add.html', locals())
 
 def download(request):
     # if request.method == "POST":
@@ -35,10 +35,10 @@ def download(request):
     #     url = 'https://www.facebook.com/favicon.ico'
     #     r = requests.get(url, allow_redirects=True)
     #     open('facebook.ico', 'wb').write(r.content)
-        # return render(request, 'upload_profile/add.html', locals())
+        # return render(request, 'creator/add.html', locals())
     # =====新增的程式碼=====#
-    return render(request, 'upload_profile/download.html', locals())
+    return render(request, 'creator/download.html', locals())
 
 def detail(request):
     list_user = User.objects.all()
-    return render(request, 'upload_profile/detail.html', locals())
+    return render(request, 'creator/detail.html', locals())
