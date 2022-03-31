@@ -21,7 +21,7 @@ def add(request):
         call.main(str(zip_file).split(".")[0], int(image_num), upload_id)
         # user = User(user_image=user_img)
         # user.save()
-        return render(request, 'creator/download.html/', context)
+        return render(request, 'creator/download.html', context)
     return render(request, 'creator/add.html', locals())
 
 def download(request):

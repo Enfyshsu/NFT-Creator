@@ -1,15 +1,55 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>添加使用者資料</title>
+    <title>NFT Creator</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <form action="/creator/add/" enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        <input type="file" name="zip_file"><br><br>
-        <input type="text" name="image_num"><br><br>
-        <input type="submit" value="提交">
-    </form>
+    <div class="area noselect" >
+        <div class="context">
+            <h1>Upload Your NFT Image Material</h1>
+        </div>
+        <div class="container">
+            <form action="/creator/add/" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <!-- <input type="file" name="zip_file"><br><br> -->
+                <div class="box">
+                    <h1>Step 1.&nbsp&nbsp&nbspChoose the NFT Image Material File (zip only)</h1>
+                    <input type="file" id="upload" name="zip_file" hidden/>
+                    <label for="upload">Choose File</label>
+                    <span id="file-chosen">No file chosen</span><br><br><br>
+                    <h1>Step 2.&nbsp&nbsp&nbspFill in the Number of NFT Images to be Generated</h1>
+                    <input type="text" class="input" name="image_num"><br><br>
+                </div>
+                <div class="upload-box">
+                    <input class="upload-button" type="submit" value="UPLOAD">
+                </div>
+            </form>
+        </div>
+        <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+        </ul>
+    </div >
+    
+            
+
+<script>
+    const actualBtn = document.getElementById('upload');
+    const fileChosen = document.getElementById('file-chosen');
+    actualBtn.addEventListener('change', function(){
+        fileChosen.textContent = this.files[0].name
+    })
+</script>
 </body>
 </html>
