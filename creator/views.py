@@ -33,7 +33,3 @@ def download(request):
         # return render(request, 'creator/add.html', locals())
     # =====新增的程式碼=====#
     return render(request, 'creator/download.html', locals())
-
-def detail(request):
-    list_user = User.objects.all()
-    return render(request, 'creator/detail.html', locals())
