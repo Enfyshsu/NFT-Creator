@@ -34,8 +34,11 @@ For example:
 $ python3 manage.py runserver 140.112.X.X:8000
 ```
 
-## Upload Material
-![](https://i.imgur.com/KtsjpJ5.jpg)
+### Upload Material
+![](https://i.imgur.com/MJ3VOV0.jpg)
 
-## Download NFT Images
+### Download NFT Images
 ![](https://i.imgur.com/E7uJlMn.jpg)
+
+### Demo Video
+https://youtu.be/VzzbL8aXHjQ
